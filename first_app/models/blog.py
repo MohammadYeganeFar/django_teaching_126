@@ -17,8 +17,9 @@ class BlogPost(models.Model):
     title = models.CharField(max_length=30, unique=True)
     content = models.TextField(null=True, blank=True)
     is_shown = models.BooleanField(default=False)
-    created_at = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
     authors = models.ManyToManyField(PostAuthor)
+    num_likes = models.IntegerField(default=0)
 
     def __str__(self):
         return f"{self.title}"

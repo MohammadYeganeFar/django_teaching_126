@@ -2,28 +2,30 @@ from django.contrib import admin
 from first_app.models import BlogPost, Comment, PostAuthor
 
 @admin.action(description="make post to shown")
-def make_shown(BlogPost, request, queryset):
+def make_shown(self, request, queryset):
     queryset.update(is_shown=True)
 
+class BaseAdmin(admin.ModelAdmin):
 
-@admin.action(description="clear deleted objects from server")
-def hard_delete(BlogPost, request, queryset):
-    queryset.delete()
+    actions = ['hard_delete']
+
+    @admin.action(description="clear deleted objects from server")
+    def hard_delete(self, request, queryset):
+        queryset.delete()
 
 
 @admin.register(BlogPost)
-class BlogPostAdmin(admin.ModelAdmin):
+class BlogPostAdmin(BaseAdmin):
     list_display=('title', 'is_shown', 'created_at')
     list_filter=('is_shown','title')
-    actions = [make_shown]
 
 
 @admin.register(Comment)
-class CommentAdmin(admin.ModelAdmin):
+class CommentAdmin(BaseAdmin):
     list_display=('id', 'blog_post', 'author')
     search_fields=('blog_post__title','author')
     raw_id_fields = ('blog_post',)
 
 @admin.register(PostAuthor)
-class PostAuthorAdmin(admin.ModelAdmin):
+class PostAuthorAdmin(BaseAdmin):
     pass
