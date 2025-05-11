@@ -14,7 +14,7 @@ class PostAuthor(models.Model):
 
 
 class BlogPost(models.Model):
-    title = models.CharField(max_length=30, unique=True)
+    title = models.CharField(max_length=200, unique=True)
     content = models.TextField(null=True, blank=True)
     is_shown = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
