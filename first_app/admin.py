@@ -26,6 +26,22 @@ class CommentAdmin(BaseAdmin):
     search_fields=('blog_post__title','author')
     raw_id_fields = ('blog_post',)
 
+    def has_add_permission(self, request):
+        return True
+
+    def has_change_permission(self, request, obj=None):
+        print('\n\n\n\n',type(request.user))
+        if request.user.has_perm('change_comment'):
+            return True
+        return False
+    
+    def has_delete_permission(self, request, obj=None):
+        return True
+    
+    def has_view_permission(self, request, obj=None):
+        return True
+
+
 @admin.register(PostAuthor)
 class PostAuthorAdmin(BaseAdmin):
     pass
