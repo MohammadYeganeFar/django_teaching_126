@@ -11,6 +11,11 @@ class PostAuthor(models.Model):
     @property
     def full_name(self):
         return f"{self.first_name} {self.last_name}"
+    
+    class Meta:
+        permissions = [
+            ('can_publish', 'Can publish post')
+        ]
 
 
 class BlogPost(models.Model):
