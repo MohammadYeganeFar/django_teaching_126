@@ -38,6 +38,11 @@ class Comment(models.Model):
     def __str__(self):
         return f"{self.blog_post} {self.id}"
     
+    class Meta:
+        permissions = [
+            ('create_comment', 'Can add comment for blog-posts')
+        ]
+    
 
 class ContactUs(models.Model):
     name = models.CharField(max_length=100)
